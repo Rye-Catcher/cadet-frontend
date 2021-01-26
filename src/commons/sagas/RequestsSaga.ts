@@ -179,10 +179,10 @@ export const getGoals = async (
 };
 
 /**
- * GET achievements/goals
+ * GET self/goals
  */
 export const getOwnGoals = async (tokens: Tokens): Promise<AchievementGoal[] | null> => {
-  const resp = await request('achievements/goals', 'GET', {
+  const resp = await request('self/goals', 'GET', {
     ...tokens,
     shouldRefresh: true
   });
@@ -204,7 +204,47 @@ export const getOwnGoals = async (tokens: Tokens): Promise<AchievementGoal[] | n
 };
 
 /**
- * POST /achievements/{achievementId}
+ * PUT /admin/achievements
+ */
+export async function bulkUpdateAchievements(
+  achievements: AchievementItem[],
+  tokens: Tokens
+): Promise<Response | null> {
+  const resp = await request(`admin/achievements`, 'POST', {
+    accessToken: tokens.accessToken,
+    body: { achievements: achievements },
+    noHeaderAccept: true,
+    refreshToken: tokens.refreshToken,
+    shouldAutoLogout: false,
+    shouldRefresh: true
+  });
+
+  return resp;
+  // TODO: confirmation notification
+}
+
+/**
+ * PUT /admin/goals
+ */
+export async function bulkUpdateGoals(
+  goals: GoalDefinition[],
+  tokens: Tokens
+): Promise<Response | null> {
+  const resp = await request(`admin/goals`, 'POST', {
+    accessToken: tokens.accessToken,
+    body: { goals: goals },
+    noHeaderAccept: true,
+    refreshToken: tokens.refreshToken,
+    shouldAutoLogout: false,
+    shouldRefresh: true
+  });
+
+  return resp;
+  // TODO: confirmation notification
+}
+
+/**
+ * POST /achievements/:achievement_id
  */
 export const editAchievement = async (
   achievement: AchievementItem,

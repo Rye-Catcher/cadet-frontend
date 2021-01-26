@@ -6,19 +6,15 @@ import AchievementInferencer from '../../../commons/achievement/utils/Achievemen
 import { OverallState } from '../../../commons/application/ApplicationTypes';
 import { mockAchievements, mockGoals } from '../../../commons/mocks/AchievementMocks';
 import {
-  editAchievement,
-  editGoal,
+  bulkUpdateAchievements,
+  bulkUpdateGoals,
   getAchievements,
-  getOwnGoals,
-  removeAchievement,
-  removeGoal,
-  saveAchievements,
-  saveGoals
+  getOwnGoals
 } from '../../../features/achievement/AchievementActions';
 import AchievementControl, { DispatchProps, StateProps } from './AchievementControl';
 
 const mapStateToProps: MapStateToProps<StateProps, {}, OverallState> = state => ({
-  inferencer: Constants.useBackend
+  inferencer: Constants.useAchievementBackend
     ? new AchievementInferencer(state.achievement.achievements, state.achievement.goals)
     : new AchievementInferencer(mockAchievements, mockGoals)
 });
@@ -26,14 +22,10 @@ const mapStateToProps: MapStateToProps<StateProps, {}, OverallState> = state => 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      handleEditAchievement: editAchievement,
-      handleEditGoal: editGoal,
-      handleGetAchievements: getAchievements,
-      handleGetOwnGoals: getOwnGoals,
-      handleRemoveAchievement: removeAchievement,
-      handleRemoveGoal: removeGoal,
-      handleSaveAchievements: saveAchievements,
-      handleSaveGoals: saveGoals
+      bulkUpdateAchievements,
+      bulkUpdateGoals,
+      getAchievements,
+      getOwnGoals
     },
     dispatch
   );

@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
+import { Collapse } from '@blueprintjs/core';
+import React, { useContext, useState } from 'react';
 
-import { getAbilityColor } from '../../features/achievement/AchievementConstants';
+import {
+  AchievementContext,
+  getAbilityColor
+} from '../../features/achievement/AchievementConstants';
 import { AchievementStatus, FilterStatus } from '../../features/achievement/AchievementTypes';
-import AchievementCard from './utils/AchievementCard';
-import AchievementInferencer from './utils/AchievementInferencer';
+import AchievementCard from './AchievementCard';
 
 type AchievementTaskProps = {
   id: number;
-  inferencer: AchievementInferencer;
   filterStatus: FilterStatus;
   focusState: [number, any];
 };
 
 function AchievementTask(props: AchievementTaskProps) {
-  const { id, inferencer, filterStatus, focusState } = props;
+  const { id, filterStatus, focusState } = props;
+
+  const inferencer = useContext(AchievementContext);
+  const prerequisiteIds = [...inferencer.getImmediateChildren(id)];
+  const taskColor = getAbilityColor(inferencer.getAchievement(id).ability);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
-  const prerequisiteIds = [...inferencer.getImmediateChildren(id)];
-  const taskColor = getAbilityColor(inferencer.getAchievementItem(id).ability);
 
   /**
    * Checks whether the AchievementItem (can be a task or prereq) should be rendered
@@ -65,13 +68,12 @@ function AchievementTask(props: AchievementTaskProps) {
         <li className="task">
           <AchievementCard
             id={id}
-            inferencer={inferencer}
-            shouldRender={shouldRender(id)}
             focusState={focusState}
             isDropdownOpen={isDropdownOpen}
+            shouldRender={shouldRender(id)}
             toggleDropdown={toggleDropdown}
           />
-          {isDropdownOpen && (
+          <Collapse isOpen={isDropdownOpen} keepChildrenMounted={true}>
             <div className="prerequisite-container">
               {prerequisiteIds.map(prerequisiteId => (
                 <div className="prerequisite" key={prerequisiteId}>
@@ -84,14 +86,13 @@ function AchievementTask(props: AchievementTaskProps) {
                   ></div>
                   <AchievementCard
                     id={prerequisiteId}
-                    inferencer={inferencer}
-                    shouldRender={shouldRender(prerequisiteId)}
                     focusState={focusState}
+                    shouldRender={shouldRender(prerequisiteId)}
                   />
                 </div>
               ))}
             </div>
-          )}
+          </Collapse>
         </li>
       )}
     </>
