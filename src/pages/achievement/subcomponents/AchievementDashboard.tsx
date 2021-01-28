@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -68,7 +69,12 @@ function Dashboard(props: DispatchProps & StateProps) {
       <div className="AchievementDashboard">
         <AchievementOverview name={name || 'User'} studio={group || 'Staff'} />
 
-        <button onClick={() => history.push('/achievement/control')}>Achievement Control</button>
+        <Button
+          className="command-button"
+          icon={IconNames.SETTING}
+          onClick={() => history.push('/achievement/control')}
+          text="Achievement Control"
+        />
 
         <div className="achievement-main">
           <div className="filter-container">
