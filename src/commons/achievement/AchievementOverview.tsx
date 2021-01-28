@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import { AchievementContext } from 'src/features/achievement/AchievementConstants';
 
 import AchievementLevel from './overview/AchievementLevel';
@@ -15,14 +14,12 @@ function AchievementOverview(props: AchievementOverviewProps) {
   const inferencer = useContext(AchievementContext);
   const studentXp = inferencer.getTotalXp();
 
-  const history = useHistory();
 
   return (
     <div className="achievement-overview">
       <AchievementLevel studentXp={studentXp} />
       <h3>{name}</h3>
       <h3>{studio}</h3>
-      <button onClick={() => history.push('/achievement/control')}>Achievement Control</button>
     </div>
   );
 }
