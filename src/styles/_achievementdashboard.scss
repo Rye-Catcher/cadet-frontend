@@ -109,18 +109,15 @@
     h3 {
       margin: 0 $default-spacing;
     }
-
-    .command {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
   
-      .command-button {
-        display: flex;
-        height: 1em;
-        margin: $default-spacing;
-      }
+    .command-button {
+      display: flex;
+      float: right;
+      width: 20%;
+      height: 1em;
+      margin: $default-spacing;
     }
+
   }
 
   .achievement-main {
