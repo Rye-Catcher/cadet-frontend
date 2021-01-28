@@ -75,7 +75,10 @@ const NavigationBar: React.SFC<NavigationBarProps> = props => (
 
     <NavbarGroup align={Alignment.RIGHT}>
       
-      {props.role && props.role !== Role.Student && window.location.pathname === "/achievement" && (
+      {props.role && props.role !== Role.Student 
+        && (window.location.pathname === "/achievement"
+          || window.location.pathname === "/achievement/control") 
+        && (
         <NavLink
           activeClassName={Classes.ACTIVE}
           className={classNames('NavigationBar__link', Classes.BUTTON, Classes.MINIMAL)}

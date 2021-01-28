@@ -1,7 +1,6 @@
 import { Button } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import AchievementFilter from '../../../commons/achievement/AchievementFilter';
 import AchievementOverview from '../../../commons/achievement/AchievementOverview';
@@ -62,19 +61,11 @@ function Dashboard(props: DispatchProps & StateProps) {
   const focusState = useState<number>(NaN);
   const [focusId] = focusState;
 
-  const history = useHistory();
 
   return (
     <AchievementContext.Provider value={inferencer}>
       <div className="AchievementDashboard">
         <AchievementOverview name={name || 'User'} studio={group || 'Staff'} />
-
-        <Button
-          className="command-button"
-          icon={IconNames.SETTINGS}
-          onClick={() => history.push('/achievement/control')}
-          text="Achievement Control"
-        />
 
         <div className="achievement-main">
           <div className="filter-container">
