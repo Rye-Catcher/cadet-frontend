@@ -71,7 +71,7 @@ function Dashboard(props: DispatchProps & StateProps) {
 
         <Button
           className="command-button"
-          icon={IconNames.SETTING}
+          icon={IconNames.SETTINGS}
           onClick={() => history.push('/achievement/control')}
           text="Achievement Control"
         />
